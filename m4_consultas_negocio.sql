@@ -11,7 +11,7 @@
 -- =========================================================
 
 SELECT
-    MONTH(fecha_venta) AS mes,
+   EXTRACT(MONTH FROM fecha_venta) AS mes,
     SUM(cantidad * precio_unitario) AS total_facturado,
     COUNT(*) AS cantidad_pedidos,
     AVG(cantidad * precio_unitario) AS ticket_promedio
