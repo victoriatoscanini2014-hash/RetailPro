@@ -1,7 +1,7 @@
 -- =========================================================
 -- M4 - CONSULTAS DE NEGOCIO
 -- Base de datos: Ventas_Tech_DB
--- Motor: SQL Server
+-- Motor: PostgreSQL
 -- Tabla utilizada: ventas
 -- =========================================================
 
@@ -11,12 +11,12 @@
 -- =========================================================
 
 SELECT
-   EXTRACT(MONTH FROM fecha_venta) AS mes,
+    EXTRACT(MONTH FROM fecha_venta) AS mes,
     SUM(cantidad * precio_unitario) AS total_facturado,
     COUNT(*) AS cantidad_pedidos,
     AVG(cantidad * precio_unitario) AS ticket_promedio
 FROM ventas
-GROUP BY MONTH(fecha_venta)
+GROUP BY EXTRACT(MONTH FROM fecha_venta)
 ORDER BY mes;
 
 
@@ -24,13 +24,14 @@ ORDER BY mes;
 -- CONSULTA 2 - RANKING DE PRODUCTOS
 -- =========================================================
 
-SELECT TOP 5
+SELECT
     id_producto,
     SUM(cantidad) AS unidades_vendidas,
     SUM(cantidad * precio_unitario) AS total_generado
 FROM ventas
 GROUP BY id_producto
-ORDER BY total_generado DESC;
+ORDER BY total_generado DESC
+LIMIT 5;
 
 
 -- =========================================================
@@ -53,10 +54,10 @@ ORDER BY cantidad_pedidos DESC;
 
 WITH resumen_mensual AS (
     SELECT
-        MONTH(fecha_venta) AS mes,
+        EXTRACT(MONTH FROM fecha_venta) AS mes,
         SUM(cantidad * precio_unitario) AS total_facturado
     FROM ventas
-    GROUP BY MONTH(fecha_venta)
+    GROUP BY EXTRACT(MONTH FROM fecha_venta)
 )
 SELECT
     mes,
@@ -72,7 +73,6 @@ ORDER BY mes;
 
 -- =========================================================
 -- HALLAZGOS
--- Completar después de revisar los resultados.
 -- =========================================================
 
 -- 1. El producto 1 fue el de mayor facturación, con $3600.
