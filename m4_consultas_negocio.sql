@@ -75,6 +75,6 @@ ORDER BY mes;
 -- Completar después de revisar los resultados.
 -- =========================================================
 
--- 1.
--- 2.
--- 3.
+-- 1. El producto 1 fue el de mayor facturación, con $3600.
+-- 2. El mes 3 superó el promedio mensual de facturación.
+-- 3. El cliente 1 realizó 2 pedidos y generó un gasto total de $2640.
